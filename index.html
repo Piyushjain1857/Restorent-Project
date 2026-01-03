@@ -190,35 +190,6 @@
             © 2025 All Rights Reserved | Designed by Piyush Jain
         </p>
     </footer>
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll(".carousel-img");
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove("active");
-                if (i === index) {
-                    slide.classList.add("active");
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        // Auto slide every 4 seconds
-        setInterval(nextSlide, 4000);
-
-        // Initialize
-        showSlide(currentSlide); ƒ
-    </script>
     <script src="script.js"></script>
 </body>
 
