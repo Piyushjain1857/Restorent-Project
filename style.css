@@ -299,36 +299,91 @@ nav a:hover::after {
 }
 
 /* RESPONSIVE */
-@media(max-width: 768px) {
+@media (max-width: 768px) {
 
-    .grid-2,
-    .grid-3,
-    .grid-4 {
-        grid-template-columns: 1fr;
-    }
+  /* GLOBAL */
+  h2 {
+    font-size: 26px;
+  }
 
-    nav {
-        display: none;
-        flex-direction: column;
-        margin-top: 15px;
-    }
+  p {
+    font-size: 14px;
+  }
 
-    nav a {
-        margin: 10px 0;
-    }
+  .section {
+    padding: 80px 0;
+  }
 
-    .menu-toggle {
-        display: block;
-    }
+  /* NAVBAR */
+  .nav-wrapper {
+    flex-wrap: wrap;
+  }
 
-    .carousel-img {
-        height: 320px;
-    }
+  nav {
+    width: 100%;
+    background: #ebe2d3;
+    padding: 15px 0;
+  }
 
-    .section {
-        padding: 90px 0;
-    }
+  nav a {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  /* SLIDER */
+  .carousel-img {
+    height: 300px;
+  }
+
+  .carousel-btn {
+    font-size: 20px;
+    padding: 8px 10px;
+  }
+
+  /* GRID SYSTEM */
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* ABOUT */
+  #about img {
+    margin-top: 30px;
+  }
+
+  /* WORK CARDS */
+  .card-body {
+    padding: 20px;
+  }
+
+  /* SERVICES */
+  #service img {
+    width: 80px;
+    margin: 0 auto 15px;
+  }
+
+  /* CONTACT */
+  .contact-card {
+    padding: 30px 20px;
+  }
+
+  /* FOOTER */
+  #footer {
+    padding: 50px 0 30px;
+  }
+
+  #footer .grid-4 {
+    gap: 30px;
+    text-align: center;
+  }
+
+  .social i {
+    font-size: 22px;
+  }
 }
+
 
 /* CUSTOM SECTION IMPROVEMENTS */
 #about .grid-2 {
