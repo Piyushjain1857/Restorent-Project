@@ -384,31 +384,6 @@ nav a:hover::after {
     }
 }
 
-@media (max-width: 1024px) {
-
-    /* NAVBAR */
-    nav a {
-        margin-left: 16px;
-    }
-
-    /* SLIDER */
-    .carousel-img {
-        height: 70vh;
-    }
-
-    /* GRID */
-    .grid-2 {
-        grid-template-columns: 1fr;
-    }
-
-    .grid-3 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     /* CUSTOM SECTION IMPROVEMENTS */
     #about .grid-2 {
         align-items: center;
