@@ -409,6 +409,19 @@ nav a:hover::after {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    /* CUSTOM SECTION IMPROVEMENTS */
+    #about .grid-2 {
+        align-items: center;
+    }
+
+    #service img {
+        margin-bottom: 18px;
+    }
+
+    #work .card-body {
+        padding: 26px;
+    }
+
     /* ABOUT */
     #about .grid-2 {
         gap: 30px;
@@ -423,17 +436,4 @@ nav a:hover::after {
     #footer .grid-4 {
         gap: 40px;
     }
-}
-
-/* CUSTOM SECTION IMPROVEMENTS */
-#about .grid-2 {
-    align-items: center;
-}
-
-#service img {
-    margin-bottom: 18px;
-}
-
-#work .card-body {
-    padding: 26px;
 }
