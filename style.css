@@ -384,6 +384,20 @@ nav a:hover::after {
     }
 }
 
+@media (max-width: 1024px) {
+
+    /* NAVBAR */
+    nav a {
+        margin-left: 16px;
+    }
+
+    /* SLIDER */
+    .carousel-img {
+        height: 70vh;
+    }
+
+
+
     /* CUSTOM SECTION IMPROVEMENTS */
     #about .grid-2 {
         align-items: center;
