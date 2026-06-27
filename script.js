@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${item.img}" alt="${item.name}">
                     <div class="cart-item-info">
                         <h4>${item.name}</h4>
-                        <span class="cart-item-price">$${item.price}</span>
+                        <span class="cart-item-price">₹${item.price.toLocaleString('en-IN')}</span>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
                             <span>${item.quantity}</span>
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         cartCount.innerText = count;
-        cartTotalAmount.innerText = `$${total.toFixed(2)}`;
+        cartTotalAmount.innerText = `₹${total.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         localStorage.setItem('aura_cart', JSON.stringify(cart));
     }
 
