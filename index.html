@@ -3,185 +3,846 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Restaurant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>AURA | Fine Dining Experience</title>
+    <meta name="description"
+        content="Experience the finest culinary arts at AURA. Michelin-star inspired luxury dining, exquisite menus, and a premium atmosphere.">
 
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="AURA | Fine Dining Experience">
+    <meta property="og:description"
+        content="A Michelin-star inspired luxury dining experience with exquisite menus and a premium atmosphere.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (Phosphor Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
 
-    <!-- HEADER -->
-    <header id="main_menu">
-        <div class="navbar">
-            <div class="container nav-wrapper">
-                <a href="#" class="logo">
-                    <img src="img/logo.png" alt="Logo">
-                </a>
-                <button class="menu-toggle" id="menuToggle">☰</button>
-                <nav id="navMenu">
-                    <a href="#slider">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#work">Work</a>
-                    <a href="#service">Service</a>
-                    <a href="#contact">Contact Us</a>
-                </nav>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">AURA<span>.</span></a>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#chef" class="nav-link">Chef</a>
+                <a href="#testimonials" class="nav-link">Reviews</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#reservation" class="btn btn-primary nav-book-btn">Book a Table</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="icon-btn" aria-label="Search" id="searchBtn"><i class="ph ph-magnifying-glass"></i></button>
+                <button class="icon-btn cart-btn" aria-label="Cart" id="cartBtn">
+                    <i class="ph ph-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <i class="ph ph-list"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- SLIDER -->
-    <section id="slider">
-        <div class="carousel">
-            <img src="img/banner_01.jpg" class="carousel-img active">
-            <img src="img/banner_02.jpg" class="carousel-img">
-            <img src="img/banner_03.jpg" class="carousel-img">
-            <button class="carousel-btn prev" onclick="prevSlide()">❮</button>
-            <button class="carousel-btn next" onclick="nextSlide()">❯</button>
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <button class="close-btn" id="closeSearchBtn"><i class="ph ph-x"></i></button>
+        <div class="search-container">
+            <input type="text" placeholder="Search for dishes..." class="search-input">
+            <button class="btn btn-primary"><i class="ph ph-magnifying-glass"></i> Search</button>
         </div>
-    </section>
+    </div>
 
-    <!-- ABOUT -->
-    <section id="about" class="section">
-        <div class="container grid-2">
-            <div>
-                <h2>About Us</h2>
-                <h6>What We Do?</h6>
-                <p>We provide high-quality food services with a strong focus on customer satisfaction, hygiene, and
-                    premium taste.</p>
-                <button class="btn">Learn More</button>
-            </div>
-            <div>
-                <img src="img/about.jpg" alt="About">
-            </div>
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button class="close-btn" id="closeCartBtn"><i class="ph ph-x"></i></button>
         </div>
-    </section>
-
-    <!-- WORK -->
-    <section id="work" class="section bg-light">
-        <div class="container">
-            <div class="center">
-                <h2>What We Work</h2>
-                <p>Our signature dishes prepared with excellence.</p>
+        <div class="cart-items" id="cartItemsContainer">
+            <!-- Items will be injected here via JS -->
+            <div class="empty-cart-msg">Your cart is empty.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="cartTotalAmount">$0.00</span>
             </div>
+            <button class="btn btn-primary w-100" id="checkoutBtn" disabled>Proceed to Checkout</button>
+        </div>
+    </div>
 
-            <div class="grid-3">
-                <div class="card">
-                    <img src="img/image-44.jpg">
-                    <div class="card-body">
-                        <h4>Premium Dish</h4>
-                        <p>Prepared using authentic ingredients and expert chefs.</p>
-                        <button class="btn">Read More</button>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-carousel" id="heroCarousel">
+                <div class="carousel-slide active">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=80" alt="Restaurant Interior">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1920&q=80" alt="Plated Dish">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1920&q=80" alt="Chef Cooking">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=80" alt="Romantic Table">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1920&q=80" alt="Wine Pouring">
+                </div>
+                <div class="overlay"></div>
+                <div class="particles" id="particles"></div>
+                
+                <div class="carousel-controls">
+                    <button id="heroPrev"><i class="ph ph-caret-left"></i></button>
+                    <button id="heroNext"><i class="ph ph-caret-right"></i></button>
+                </div>
+                <div class="carousel-indicators" id="heroIndicators"></div>
+            </div>
+            <div class="container hero-content">
+                <span class="subtitle fade-up">Experience the Extraordinary</span>
+                <h1 class="headline fade-up delay-1">Taste the Art of <br><span class="text-gold">Fine Dining</span>
+                </h1>
+                <p class="description fade-up delay-2">Immerse yourself in a world of exquisite flavors, where every
+                    dish is a masterpiece crafted with passion and precision.</p>
+                <div class="hero-btns fade-up delay-3">
+                    <a href="#reservation" class="btn btn-primary ripple">Book a Table</a>
+                    <a href="#menu" class="btn btn-outline ripple">Explore Menu</a>
+                </div>
+            </div>
+            <a href="#about" class="scroll-indicator" aria-label="Scroll Down">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+            </a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about section-padding">
+            <div class="container grid-2 align-center">
+                <div class="about-image-wrapper reveal-left">
+                    <div class="image-stack">
+                        <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=600&q=80"
+                            alt="Chef preparing food" class="img-back">
+                        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=500&q=80"
+                            alt="Plated dish" class="img-front">
+                        <div class="experience-badge">
+                            <span class="years" data-target="15">0</span>
+                            <span class="text">Years of<br>Excellence</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-content reveal-right">
+                    <div class="section-title">
+                        <span class="subtitle">Our Story</span>
+                        <h2>A Legacy of Culinary Perfection</h2>
+                    </div>
+                    <p class="text-lead">Founded with a vision to redefine the fine dining experience, AURA brings
+                        together traditional techniques and modern innovation.</p>
+                    <p>Our mission is to source the finest organic ingredients globally and transform them into
+                        unforgettable culinary journeys. Every detail, from the ambient lighting to the handcrafted
+                        ceramics, is designed to elevate your senses.</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <i class="ph ph-cooking-pot text-gold"></i>
+                            <h4 class="counter" data-target="12">0</h4>
+                            <p>Expert Chefs</p>
+                        </div>
+                        <div class="stat-item">
+                            <i class="ph ph-users text-gold"></i>
+                            <h4 class="counter" data-target="15000">0</h4>
+                            <p>Happy Guests</p>
+                        </div>
+                        <div class="stat-item">
+                            <i class="ph ph-medal text-gold"></i>
+                            <h4 class="counter" data-target="8">0</h4>
+                            <p>Awards Won</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features / Why Choose Us -->
+        <section id="features" class="features section-padding bg-darker">
+            <div class="container">
+                <div class="section-title center reveal-up">
+                    <span class="subtitle">Why Choose Us</span>
+                    <h2>The AURA Standard</h2>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card reveal-up delay-1">
+                        <div class="icon-wrapper"><i class="ph ph-leaf"></i></div>
+                        <h3>Fresh Ingredients</h3>
+                        <p>We partner with local organic farms to ensure peak freshness in every bite.</p>
+                    </div>
+                    <div class="feature-card reveal-up delay-2">
+                        <div class="icon-wrapper"><i class="ph ph-moped"></i></div>
+                        <h3>Fast Delivery</h3>
+                        <p>Experience our premium menu from the comfort of your home, delivered swiftly.</p>
+                    </div>
+                    <div class="feature-card reveal-up delay-3">
+                        <div class="icon-wrapper"><i class="ph ph-wine"></i></div>
+                        <h3>Private Dining</h3>
+                        <p>Exclusive rooms designed for intimate gatherings and special celebrations.</p>
+                    </div>
+                    <div class="feature-card reveal-up delay-4">
+                        <div class="icon-wrapper"><i class="ph ph-music-notes"></i></div>
+                        <h3>Live Music</h3>
+                        <p>Enjoy soothing jazz and classical performances every weekend evening.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="menu section-padding">
+            <div class="container">
+                <div class="section-title center reveal-up">
+                    <span class="subtitle">Discover</span>
+                    <h2>Our Exquisite Menu</h2>
+                </div>
+
+                <!-- Menu Filters -->
+                <div class="menu-filters reveal-up delay-1" id="menuFilters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="starters">Starters</button>
+                    <button class="filter-btn" data-filter="mains">Main Course</button>
+                    <button class="filter-btn" data-filter="desserts">Desserts</button>
+                    <button class="filter-btn" data-filter="drinks">Drinks</button>
+                </div>
+
+                <!-- Menu Grid -->
+                <div class="menu-grid" id="menuGrid">
+                    <!-- Item 1 -->
+                    <div class="menu-item reveal-up" data-category="starters">
+                        <div class="menu-img">
+                            <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=500&q=80"
+                                alt="Truffle Carpaccio">
+                            <div class="badges">
+                                <span class="badge badge-veg">Veg</span>
+                            </div>
+                            <button class="fav-btn"><i class="ph ph-heart"></i></button>
+                        </div>
+                        <div class="menu-info">
+                            <div class="menu-title-row">
+                                <h3>Truffle Carpaccio</h3>
+                                <span class="price">$24</span>
+                            </div>
+                            <p class="desc">Thinly sliced heirloom tomatoes, black truffle oil, microgreens.</p>
+                            <div class="menu-meta">
+                                <span class="rating"><i class="ph-fill ph-star"></i> 4.8</span>
+                                <span class="calories">320 cal</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm add-to-cart" data-id="1" data-name="Truffle Carpaccio"
+                                data-price="24"
+                                data-img="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=100&q=80">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="menu-item reveal-up" data-category="mains">
+                        <div class="menu-img">
+                            <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=500&q=80"
+                                alt="Wagyu Ribeye">
+                            <div class="badges">
+                                <span class="badge badge-nonveg">Non-Veg</span>
+                                <span class="badge badge-hot"><i class="ph ph-fire"></i></span>
+                            </div>
+                            <button class="fav-btn"><i class="ph ph-heart"></i></button>
+                        </div>
+                        <div class="menu-info">
+                            <div class="menu-title-row">
+                                <h3>Wagyu Ribeye A5</h3>
+                                <span class="price">$120</span>
+                            </div>
+                            <p class="desc">Pan-seared Wagyu, garlic butter asparagus, red wine jus.</p>
+                            <div class="menu-meta">
+                                <span class="rating"><i class="ph-fill ph-star"></i> 5.0</span>
+                                <span class="calories">850 cal</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm add-to-cart" data-id="2" data-name="Wagyu Ribeye A5"
+                                data-price="120"
+                                data-img="https://images.unsplash.com/photo-1544025162-8310c14c5b36?auto=format&fit=crop&w=100&q=80">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="menu-item reveal-up" data-category="mains">
+                        <div class="menu-img">
+                            <img src="https://images.unsplash.com/photo-1559742811-822873691df8?auto=format&fit=crop&w=500&q=80"
+                                alt="Lobster Thermidor">
+                            <div class="badges">
+                                <span class="badge badge-nonveg">Seafood</span>
+                            </div>
+                            <button class="fav-btn"><i class="ph ph-heart"></i></button>
+                        </div>
+                        <div class="menu-info">
+                            <div class="menu-title-row">
+                                <h3>Lobster Thermidor</h3>
+                                <span class="price">$85</span>
+                            </div>
+                            <p class="desc">Fresh caught lobster, creamy mustard sauce, gruyere crust.</p>
+                            <div class="menu-meta">
+                                <span class="rating"><i class="ph-fill ph-star"></i> 4.9</span>
+                                <span class="calories">620 cal</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm add-to-cart" data-id="3" data-name="Lobster Thermidor"
+                                data-price="85"
+                                data-img="https://images.unsplash.com/photo-1551221768-e4b2169123c5?auto=format&fit=crop&w=100&q=80">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="menu-item reveal-up" data-category="starters">
+                        <div class="menu-img">
+                            <img src="https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=500&q=80"
+                                alt="Scallop Ceviche">
+                            <div class="badges">
+                                <span class="badge badge-nonveg">Seafood</span>
+                            </div>
+                            <button class="fav-btn"><i class="ph ph-heart"></i></button>
+                        </div>
+                        <div class="menu-info">
+                            <div class="menu-title-row">
+                                <h3>Scallop Ceviche</h3>
+                                <span class="price">$28</span>
+                            </div>
+                            <p class="desc">Hokkaido scallops, yuzu dressing, jalapeño, cilantro.</p>
+                            <div class="menu-meta">
+                                <span class="rating"><i class="ph-fill ph-star"></i> 4.7</span>
+                                <span class="calories">210 cal</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm add-to-cart" data-id="4" data-name="Scallop Ceviche"
+                                data-price="28"
+                                data-img="https://images.unsplash.com/photo-1626804475297-41609ea0aa5eb?auto=format&fit=crop&w=100&q=80">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="menu-item reveal-up" data-category="desserts">
+                        <div class="menu-img">
+                            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=500&q=80"
+                                alt="Gold Leaf Tiramisu">
+                            <div class="badges">
+                                <span class="badge badge-veg">Veg</span>
+                            </div>
+                            <button class="fav-btn"><i class="ph ph-heart"></i></button>
+                        </div>
+                        <div class="menu-info">
+                            <div class="menu-title-row">
+                                <h3>Gold Leaf Tiramisu</h3>
+                                <span class="price">$22</span>
+                            </div>
+                            <p class="desc">Mascarpone cream, espresso sponge, 24k gold leaf.</p>
+                            <div class="menu-meta">
+                                <span class="rating"><i class="ph-fill ph-star"></i> 4.9</span>
+                                <span class="calories">450 cal</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm add-to-cart" data-id="5"
+                                data-name="Gold Leaf Tiramisu" data-price="22"
+                                data-img="https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?auto=format&fit=crop&w=100&q=80">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="menu-item reveal-up" data-category="drinks">
+                        <div class="menu-img">
+                            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=500&q=80"
+                                alt="Smoked Old Fashioned">
+                            <div class="badges"></div>
+                            <button class="fav-btn"><i class="ph ph-heart"></i></button>
+                        </div>
+                        <div class="menu-info">
+                            <div class="menu-title-row">
+                                <h3>Smoked Old Fashioned</h3>
+                                <span class="price">$18</span>
+                            </div>
+                            <p class="desc">Aged bourbon, bitters, orange peel, hickory smoke.</p>
+                            <div class="menu-meta">
+                                <span class="rating"><i class="ph-fill ph-star"></i> 4.8</span>
+                                <span class="calories">180 cal</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm add-to-cart" data-id="6"
+                                data-name="Smoked Old Fashioned" data-price="18"
+                                data-img="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=100&q=80">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Today's Special -->
+        <section class="special-offer section-padding bg-darker">
+            <div class="container">
+                <div class="special-card grid-2 align-center reveal-up">
+                    <div class="special-image">
+                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80"
+                            alt="Chef's Special">
+                        <div class="discount-badge">-20% Today</div>
+                    </div>
+                    <div class="special-content">
+                        <span class="subtitle">Chef's Recommendation</span>
+                        <h2>Smoked Duck Breast</h2>
+                        <p>A true masterpiece of our culinary team. Tender smoked duck breast served with cherry
+                            gastrique, parsnip purée, and seasonal vegetables.</p>
+                        <div class="special-price">
+                            <span class="old-price">$65.00</span>
+                            <span class="new-price">$52.00</span>
+                        </div>
+                        <!-- Countdown Timer -->
+                        <div class="countdown" id="countdown">
+                            <div class="time-box">
+                                <span id="hours">04</span>
+                                <label>Hours</label>
+                            </div>
+                            <div class="time-box">
+                                <span id="minutes">32</span>
+                                <label>Mins</label>
+                            </div>
+                            <div class="time-box">
+                                <span id="seconds">45</span>
+                                <label>Secs</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary add-to-cart" data-id="7" data-name="Smoked Duck Breast (Special)"
+                            data-price="52"
+                            data-img="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=100&q=80">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Masonry Gallery -->
+        <section id="gallery" class="gallery section-padding">
+            <div class="container">
+                <div class="section-title center reveal-up">
+                    <span class="subtitle">Atmosphere</span>
+                    <h2>Visual Journey</h2>
+                </div>
+
+                <div class="gallery-masonry reveal-up delay-1">
+                    <div class="gallery-item item-tall">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80"
+                            alt="Restaurant interior">
+                        <div class="gallery-overlay"><i class="ph ph-arrows-out"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80"
+                            alt="Food prep">
+                        <div class="gallery-overlay"><i class="ph ph-arrows-out"></i></div>
+                    </div>
+                    <div class="gallery-item item-wide">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80"
+                            alt="Dining table">
+                        <div class="gallery-overlay"><i class="ph ph-arrows-out"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80"
+                            alt="Pasta">
+                        <div class="gallery-overlay"><i class="ph ph-arrows-out"></i></div>
+                    </div>
+                    <div class="gallery-item item-wide">
+                        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=600&q=80"
+                            alt="Chef plating">
+                        <div class="gallery-overlay"><i class="ph ph-arrows-out"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox for Gallery -->
+        <div class="lightbox" id="lightbox">
+            <button class="close-lightbox" id="closeLightbox"><i class="ph ph-x"></i></button>
+            <img src="" alt="Enlarged image" id="lightboxImg">
+        </div>
+
+        <!-- Master Chef Section -->
+        <section id="chef" class="chef section-padding bg-darker">
+            <div class="container grid-2 align-center">
+                <div class="chef-content reveal-left">
+                    <span class="subtitle">Master Chef</span>
+                    <h2>Alexander Sterling</h2>
+                    <p class="chef-quote">"Cooking is not just about combining ingredients; it is an art of
+                        orchestrating flavors to create an unforgettable emotional experience."</p>
+                    <p>With over 20 years of experience in Michelin-starred restaurants across Paris, Tokyo, and New
+                        York, Chef Alexander brings unparalleled expertise and creativity to AURA. His philosophy
+                        revolves around respecting the integrity of raw ingredients while pushing the boundaries of
+                        modern gastronomy.</p>
+
+                    <div class="chef-awards">
+                        <div class="award">
+                            <i class="ph ph-star text-gold"></i>
+                            <span>3 Michelin Stars</span>
+                        </div>
+                        <div class="award">
+                            <i class="ph ph-trophy text-gold"></i>
+                            <span>Best Global Chef 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="chef-socials">
+                        <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#"><i class="ph ph-twitter-logo"></i></a>
+                        <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                    </div>
+                </div>
+                <div class="chef-image reveal-right">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80"
+                        alt="Chef Alexander Sterling">
+                    <div class="signature">Alexander S.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials section-padding">
+            <div class="container">
+                <div class="section-title center reveal-up">
+                    <span class="subtitle">Testimonials</span>
+                    <h2>What Our Guests Say</h2>
+                </div>
+
+                <div class="testimonial-slider reveal-up delay-1">
+                    <div class="slider-container" id="sliderContainer">
+                        <!-- Slide 1 -->
+                        <div class="slide active">
+                            <div class="quote-icon"><i class="ph-fill ph-quotes"></i></div>
+                            <p class="review-text">"An absolutely transcendent experience. The Wagyu melted in my mouth,
+                                and the service was impeccable. AURA has set a new standard for fine dining."</p>
+                            <div class="reviewer">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80"
+                                    alt="Sarah J.">
+                                <div class="info">
+                                    <h4>Sarah Jenkins</h4>
+                                    <span>Food Critic, NY Times</span>
+                                    <div class="stars">
+                                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                                            class="ph-fill ph-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="slide">
+                            <div class="quote-icon"><i class="ph-fill ph-quotes"></i></div>
+                            <p class="review-text">"The tasting menu was a journey of flavors I never knew existed. The
+                                wine pairing was spot on. Highly recommend for any special occasion."</p>
+                            <div class="reviewer">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80"
+                                    alt="Michael T.">
+                                <div class="info">
+                                    <h4>Michael Thompson</h4>
+                                    <span>Local Guide</span>
+                                    <div class="stars">
+                                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                                            class="ph-fill ph-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="slide">
+                            <div class="quote-icon"><i class="ph-fill ph-quotes"></i></div>
+                            <p class="review-text">"From the moment you walk in, the atmosphere wraps you in luxury. The
+                                Truffle Carpaccio is a must-try. We will definitely be returning."</p>
+                            <div class="reviewer">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80"
+                                    alt="Emily R.">
+                                <div class="info">
+                                    <h4>Emily Rodriguez</h4>
+                                    <span>Gourmet Enthusiast</span>
+                                    <div class="stars">
+                                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                                            class="ph-fill ph-star-half"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slider-controls">
+                        <button class="slider-btn" id="prevSlide"><i class="ph ph-caret-left"></i></button>
+                        <div class="slider-dots" id="sliderDots">
+                            <!-- Dots generated by JS -->
+                        </div>
+                        <button class="slider-btn" id="nextSlide"><i class="ph ph-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reservation Section -->
+        <section id="reservation" class="reservation section-padding bg-darker">
+            <div class="container grid-2">
+                <div class="reservation-info reveal-left">
+                    <span class="subtitle">Book a Table</span>
+                    <h2>Make a Reservation</h2>
+                    <p>Secure your spot at AURA. For parties larger than 6 or private dining requests, please contact us
+                        directly via phone.</p>
+
+                    <div class="contact-methods mt-4">
+                        <div class="method">
+                            <div class="icon-box"><i class="ph ph-phone"></i></div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+91 8595850153</p>
+                            </div>
+                        </div>
+                        <div class="method">
+                            <div class="icon-box"><i class="ph ph-envelope-simple"></i></div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>Auranewcolony@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="method">
+                            <div class="icon-box"><i class="ph ph-clock"></i></div>
+                            <div>
+                                <h4>Opening Hours</h4>
+                                <p>Mon-Sun: 9 AM - 10 PM</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <img src="img/image-45.jpg">
-                    <div class="card-body">
-                        <h4>Quality Cuisine</h4>
-                        <p>Balanced flavors with high nutritional value.</p>
-                        <button class="btn">Read More</button>
-                    </div>
+                <div class="reservation-form-wrapper reveal-right">
+                    <form id="reservationForm" class="glass-form" novalidate>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="resName">Full Name</label>
+                                <input type="text" id="resName" name="resName" placeholder="John Doe" required>
+                                <span class="error-msg">Name is required</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="resPhone">Phone Number</label>
+                                <input type="tel" id="resPhone" name="resPhone" placeholder="+1 234 567 890" required
+                                    pattern="[0-9+\s\-]+">
+                                <span class="error-msg">Valid phone required</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="resEmail">Email Address</label>
+                                <input type="email" id="resEmail" name="resEmail" placeholder="john@example.com"
+                                    required>
+                                <span class="error-msg">Valid email required</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="resGuests">Number of Guests</label>
+                                <select id="resGuests" name="resGuests" required>
+                                    <option value="" disabled selected>Select Guests</option>
+                                    <option value="1">1 Person</option>
+                                    <option value="2">2 People</option>
+                                    <option value="3">3 People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5">5 People</option>
+                                    <option value="6">6 People</option>
+                                </select>
+                                <span class="error-msg">Please select guests</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="resDate">Date</label>
+                                <input type="date" id="resDate" name="resDate" required>
+                                <span class="error-msg">Date is required</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="resTime">Time</label>
+                                <select id="resTime" name="resTime" required>
+                                    <option value="" disabled selected>Select Time</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                </select>
+                                <span class="error-msg">Time is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="resMessage">Special Requests (Optional)</label>
+                            <textarea id="resMessage" name="resMessage" rows="3"
+                                placeholder="Allergies, anniversaries, etc."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-3" id="resSubmitBtn">Confirm
+                            Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="blog section-padding">
+            <div class="container">
+                <div class="section-title center reveal-up">
+                    <span class="subtitle">News & Articles</span>
+                    <h2 class="section-title">Latest from Our Blog</h2>
                 </div>
 
-                <div class="card">
-                    <img src="img/image-46.jpg">
-                    <div class="card-body">
-                        <h4>Exclusive Menu</h4>
-                        <p>Designed to meet international dining standards.</p>
-                        <button class="btn">Read More</button>
+                <div class="grid-3">
+                    <div class="blog-card reveal-up delay-1">
+                        <div class="blog-img">
+                            <img src="https://images.unsplash.com/photo-1505935428862-770b6f24f629?auto=format&fit=crop&w=500&q=80"
+                                alt="Blog 1">
+                            <div class="blog-date"><span>15</span> Oct</div>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Culinary Tips</span>
+                            <h3>The Secret to Perfect Sous-Vide</h3>
+                            <p>Discover how our chefs achieve edge-to-edge perfection in our signature meats.</p>
+                            <a href="#" class="read-more">Read More <i class="ph ph-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal-up delay-2">
+                        <div class="blog-img">
+                            <img src="https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?auto=format&fit=crop&w=500&q=80"
+                                alt="Blog 2">
+                            <div class="blog-date"><span>02</span> Oct</div>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Events</span>
+                            <h3>Wine Pairing Masterclass</h3>
+                            <p>Join our head sommelier next month for an exclusive journey through Italian wines.</p>
+                            <a href="#" class="read-more">Read More <i class="ph ph-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal-up delay-3">
+                        <div class="blog-img">
+                            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=500&q=80"
+                                alt="Blog 3">
+                            <div class="blog-date"><span>28</span> Sep</div>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Sustainability</span>
+                            <h3>Our Farm-to-Table Promise</h3>
+                            <p>Learn about our partnerships with local organic farmers and sustainable sourcing.</p>
+                            <a href="#" class="read-more">Read More <i class="ph ph-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SERVICES -->
-    <section id="service" class="section">
-        <div class="container center">
-            <h2>Our Services</h2>
-            <p>We focus on quality, professionalism, and customer satisfaction.</p>
-        </div>
-        <div class="container grid-3 center">
-            <div>
-                <img src="img/about-icon1.png">
-                <h4>Delicious Food</h4>
-                <p>Fresh and hygienic preparation.</p>
+        <!-- Newsletter & Contact Map Placeholder -->
+        <section id="contact" class="newsletter-map section-padding bg-darker">
+            <div class="container grid-2">
+                <div class="newsletter reveal-left">
+                    <h2>Subscribe to our Newsletter</h2>
+                    <p>Get exclusive updates, offers, and culinary insights directly to your inbox.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your Email Address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+                <div class="map-container reveal-right">
+                    <!-- Static Map Image Placeholder -->
+                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80"
+                        alt="Map Location" class="map-img">
+                    <div class="map-marker">
+                        <i class="ph-fill ph-map-pin"></i>
+                        <span>AURA</span>
+                    </div>
+                </div>
             </div>
-            <div>
-                <img src="img/about-icon2.png">
-                <h4>Professional Service</h4>
-                <p>Customer-centric approach.</p>
-            </div>
-            <div>
-                <img src="img/about-icon3.png">
-                <h4>Excellent Menu</h4>
-                <p>Diverse and premium selections.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-        <div class="container">
-            <div class="contact-card">
-                <h2>Contact Us</h2>
-                <form>
-                    <input type="text" placeholder="Your Name">
-                    <input type="email" placeholder="Your Email">
-                    <input type="tel" placeholder="Phone Number">
-                    <input type="text" placeholder="Subject">
-                    <textarea rows="5" placeholder="Your Message"></textarea>
-                    <button class="btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
+    </main>
 
-    <!-- FOOTER -->
-    <footer id="footer">
-        <div class="container grid-4">
-            <div>
-                <h3>Our Products</h3>
-                <ul>
-                    <li>Accounts</li>
-                    <li>Bundle</li>
-                    <li>Blog</li>
-                </ul>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-top grid-3">
+            <div class="footer-brand">
+                <a href="#" class="logo">AURA<span>.</span></a>
+                <p>Redefining luxury dining with passion, precision, and an unforgettable atmosphere.</p>
+                <div class="social-links">
+                    <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#"><i class="ph ph-twitter-logo"></i></a>
+                    <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#"><i class="ph ph-youtube-logo"></i></a>
+                </div>
             </div>
 
-            <div>
+            <div class="footer-links">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li>Home</li>
-                    <li>About</li>
-                    <li>Services</li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#menu">Our Menu</a></li>
+                    <li><a href="#reservation">Reservations</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#blog">Blog</a></li>
                 </ul>
             </div>
 
-            <div>
-                <h3>Policies</h3>
+            <div class="footer-contact">
+                <h3>Contact Info</h3>
                 <ul>
-                    <li>Privacy Policy</li>
-                    <li>License</li>
+                    <li><i class="ph ph-map-pin"></i> 490/7 New Colony Gurugram</li>
+                    <li><i class="ph ph-phone"></i> +91 8595850153</li>
+                    <li><i class="ph ph-envelope-simple"></i> Auranewcolony@gmail.com</li>
                 </ul>
-            </div>
-
-            <div>
-                <h3>Follow Us</h3>
-                <div class="social">
-                    <i class="bi bi-facebook"></i>
-                    <i class="bi bi-instagram"></i>
-                    <i class="bi bi-twitter"></i>
-                    <i class="bi bi-linkedin"></i>
-                </div>
             </div>
         </div>
 
-        <p class="copyright">
-            © 2025 All Rights Reserved | Designed by Piyush Jain
-        </p>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 AURA Fine Dining. All Rights Reserved.</p>
+            <div class="policy-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+
+        <!-- Back to Top -->
+        <a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">
+            <i class="ph ph-arrow-up"></i>
+        </a>
     </footer>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script src="script.js"></script>
 </body>
 
